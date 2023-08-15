@@ -36,6 +36,9 @@ register_blueprint "medusaling_base"
 		strength = 0,
 	},
 	data = {
+		nightmare = {
+			id   = "exalted_medusaling",
+		},
 		ai = {
 			aware  = false,
 			alert  = 1,
