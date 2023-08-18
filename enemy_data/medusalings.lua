@@ -8,9 +8,9 @@ register_blueprint "medusaling_base"
     flags     = { EF_NOMOVE, EF_NOFLY, EF_FLYING, EF_TARGETABLE, EF_ALIVE, },
 	health = {},
 	sound = {
-		idle = "medusa_idle",
-		die  = "medusa_die",
-		pain = "medusa_pain",
+		idle = "medusaling_idle",
+		die  = "medusaling_die",
+		pain = "medusaling_pain",
 	},
 	ascii     = {
 		glyph     = "o",
@@ -122,7 +122,6 @@ register_blueprint "medusaling_jaws"
 		damage      = 5,
 		crit_damage = 100,
 		accuracy    = 25,
-		slevel      = { bleed = 1, },
 	},
 	callbacks = {
 		on_damage = [[
@@ -149,7 +148,6 @@ register_blueprint "archmedusaling_jaws"
 		damage      = 10,
 		crit_damage = 100,
 		accuracy    = 25,
-		slevel      = { bleed = 2, },
 	},
 	callbacks = {
 		on_damage = [[
@@ -176,7 +174,7 @@ register_blueprint "medusaling_dodge"
 	flags = { EF_NOPICKUP }, 
 	text = {
 		name = "Slithering",
-		desc = "increases evasion",
+		desc = "increases evasion and splash damage resistance",
 	},
 	ui_buff = {
 		color     = LIGHTBLUE,
@@ -184,7 +182,8 @@ register_blueprint "medusaling_dodge"
 		priority  = 100,
 	},
 	attributes = {
-		evasion = 0,
+		evasion = 0,		
+		splash_mod = 1.0,
 	},
 	callbacks = {
 		on_action = [[
@@ -194,8 +193,10 @@ register_blueprint "medusaling_dodge"
 					if evasion > 0 then
 						if last >= COMMAND_MOVE and last <= COMMAND_MOVE_F then
 							self.attributes.evasion = math.floor( evasion / 2 )
+							self.attributes.splash_mod = 0.3
 						else
 							self.attributes.evasion = 0
+							self.attributes.splash_mod = 1.0
 						end
 					end
 				end
@@ -204,6 +205,7 @@ register_blueprint "medusaling_dodge"
 		on_move = [[
 			function ( self, entity )
 				self.attributes.evasion = math.min( self.attributes.evasion + 40 + (DIFFICULTY * 10), 100 + (DIFFICULTY * 20) )
+				self.attributes.splash_mod = 0.3
 			end
 		]],
 	},
@@ -229,6 +231,7 @@ register_blueprint "medusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
+		{ 3, keywords = { "test" }, weight = 150 },
 		{ 3, keywords = { "callisto", "europa", "demon", "demon1" }, weight = 150, dmin = 6, dmax = 29, },
 		{ 7, keywords = { "europa", "io", "demon", "demon1" }, weight = 50, dmin = 9, dmax = 57, },
 		{ 10, keywords = { "io", "swarm", "demon", "demon1" }, weight = 50, dmin = 16, dmax = 57, },
@@ -252,6 +255,7 @@ register_blueprint "archmedusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
+		{ 2, keywords = { "test" }, weight = 150 },
 		{ 3,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard" }, weight = 100, dmin = 16, },	
 		{ 5,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard" }, weight = 200, dmin = 22, },
 		{ 7,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard", "swarm" }, weight = 200, dmin = 26, },	
@@ -271,7 +275,6 @@ register_blueprint "archmedusaling"
 		experience_value = 25,
 		speed = 1.4,
 		health           = 30,
-		splash_mod = 0.3,
 		resist = {
 			emp   = 50,
 			impact = 25,
@@ -295,7 +298,8 @@ register_blueprint "exalted_medusaling"
 {
 	blueprint = "medusaling_base",
 	lists = {
-		group = "being",
+		group = "being",	
+		{ keywords = { "test" }, weight = 150 },
 		{  6,  keywords = { "beyond", "dante", "general", "demon", "demon2", "vhard" }, weight = 200, dmin = 26, },	
 	},
 	text = {
@@ -327,7 +331,6 @@ register_blueprint "exalted_medusaling"
 		experience_value = 35,
 		speed = 1.45,
 		health = 40,
-		splash_mod = 0.3,
 		resist = {
 			emp   = 50,
 			impact = 50,
