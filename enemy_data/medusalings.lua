@@ -22,7 +22,7 @@ register_blueprint "medusaling_base"
 		health           = 10,
 		resist = {
 			ignite = 100,
-			slash = 10,
+			slash = 0,
 			impact = 25,
 		},
 	},
@@ -51,6 +51,63 @@ register_blueprint "medusaling_base"
 	},
 }
 
+register_blueprint "buff_blinded"
+{
+	flags = { EF_NOPICKUP }, 
+	text = {
+		name    = "Blinded",
+		desc    = "Reduces vision range",				
+	},
+	callbacks = {
+		on_post_command = [[
+			function ( self, actor, cmt, tgt, time )
+				world:callback( self )
+			end
+		]],
+		on_callback = [[
+			function ( self )
+				local target = ecs:parent( self )
+				local level = world:get_level()
+				if self.lifetime.time_left > 100 then				
+					target.attributes.vision = level.level_info.light_range - 3
+				else
+					target.attributes.vision = level.level_info.light_range
+				end	
+				
+			end
+		]],
+		on_die = [[
+			function ( self )	
+				world:mark_destroy( self )
+			end
+		]],
+		on_enter_level = [[
+			function ( self )			
+				world:mark_destroy( self )
+			end
+		]],
+	},
+	ui_buff = {
+		color = WHITE,		
+		style = 1,
+	},
+	attributes = {		
+	},
+}
+
+register_blueprint "medusaling_curse"
+{
+	flags = { EF_NOPICKUP, EF_PERMANENT }, 
+	text = {
+		name  = "Medusaling's venom",
+		desc  = "You have been bitten by a medusaling. Some of the wounds it inflicted will never heal.",
+		bdesc = "irrecoverable health damage",
+	},
+	attributes = {
+		health_lost = 0,
+	},
+}
+
 register_blueprint "medusaling_jaws"
 {
 	weapon = {
@@ -68,25 +125,14 @@ register_blueprint "medusaling_jaws"
 		slevel      = { bleed = 1, },
 	},
 	callbacks = {
-		on_create = [=[
-		function( self )
-			self:attach( "apply_bleed" )
-		end
-		]=],
+		on_damage = [[
+			function ( weapon, who, amount, source )
+				if who and who.data and who.data.is_player then
+					world:add_buff( who, "buff_blinded", 500 )
+				end				
+			end
+		]],
 	}
-}
-
-register_blueprint "medusaling_curse"
-{
-	flags = { EF_NOPICKUP, EF_PERMANENT }, 
-	text = {
-		name  = "Medusaling's venom",
-		desc  = "You have been bitten by a medusaling. Some of the wounds it inflicted will never heal.",
-		bdesc = "irrecoverable health damage",
-	},
-	attributes = {
-		health_lost = 0,
-	},
 }
 
 register_blueprint "archmedusaling_jaws"
@@ -106,13 +152,11 @@ register_blueprint "archmedusaling_jaws"
 		slevel      = { bleed = 2, },
 	},
 	callbacks = {
-		on_create = [=[
-		function( self )
-			self:attach( "apply_bleed" )
-		end
-		]=],
 		on_damage = [[
 			function ( weapon, who, amount, source )
+				if who and who.data and who.data.is_player then
+					world:add_buff( who, "buff_blinded", 500, true )
+				end
 				if who and who.data and who.data.is_player then
 					local curse   = who:child( "medusaling_curse" ) or who:attach( "medusaling_curse" )
 					local current = curse.attributes.health_lost
@@ -125,6 +169,44 @@ register_blueprint "archmedusaling_jaws"
 			end
 		]],
 	}
+}
+
+register_blueprint "medusaling_dodge"
+{
+	flags = { EF_NOPICKUP }, 
+	text = {
+		name = "Slithering",
+		desc = "increases evasion",
+	},
+	ui_buff = {
+		color     = LIGHTBLUE,
+		attribute = "evasion",
+		priority  = 100,
+	},
+	attributes = {
+		evasion = 0,
+	},
+	callbacks = {
+		on_action = [[
+			function ( self, entity, time_passed, last )
+				if time_passed > 0 then
+					local evasion = self.attributes.evasion
+					if evasion > 0 then
+						if last >= COMMAND_MOVE and last <= COMMAND_MOVE_F then
+							self.attributes.evasion = math.floor( evasion / 2 )
+						else
+							self.attributes.evasion = 0
+						end
+					end
+				end
+			end
+		]],
+		on_move = [[
+			function ( self, entity )
+				self.attributes.evasion = math.min( self.attributes.evasion + 40 + (DIFFICULTY * 10), 100 + (DIFFICULTY * 20) )
+			end
+		]],
+	},
 }
 
 register_blueprint "medusaling_armor"
@@ -147,9 +229,9 @@ register_blueprint "medusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
-		{ 3,  keywords = { "callisto", "europa", "demon", "demon1" }, weight = 150, dmin = 6, dmax = 29, },
-		{ 5,  keywords = { "europa", "io", "demon", "demon1" }, weight = 50, dmin = 9, dmax = 57, },
-		{ 5,  keywords = { "io", "swarm", "demon", "demon1" }, weight = 50, dmin = 16, dmax = 57, },
+		{ 3, keywords = { "callisto", "europa", "demon", "demon1" }, weight = 150, dmin = 6, dmax = 29, },
+		{ 7, keywords = { "europa", "io", "demon", "demon1" }, weight = 50, dmin = 9, dmax = 57, },
+		{ 10, keywords = { "io", "swarm", "demon", "demon1" }, weight = 50, dmin = 16, dmax = 57, },
 	},
 	text = {
 		name      = "medusaling",
@@ -159,7 +241,7 @@ register_blueprint "medusaling"
 		on_create = [=[
 		function( self )
 			self:attach( "medusaling_jaws" )
-			self:attach( "medusa_dodge" )
+			self:attach( "medusaling_dodge" )
 		end
 		]=],
 	},
@@ -189,9 +271,9 @@ register_blueprint "archmedusaling"
 		experience_value = 25,
 		speed = 1.4,
 		health           = 30,
+		splash_mod = 0.3,
 		resist = {
 			emp   = 50,
-			slash = 10,
 			impact = 25,
 		},
 		damage_mod = {
@@ -203,7 +285,7 @@ register_blueprint "archmedusaling"
 		function( self )
 			self:attach( "medusaling_armor" )
 			self:attach( "archmedusaling_jaws" )
-			self:attach( "medusa_dodge" )
+			self:attach( "medusaling_dodge" )
 		end
 		]=],
 	},
@@ -244,11 +326,11 @@ register_blueprint "exalted_medusaling"
 	attributes = {
 		experience_value = 35,
 		speed = 1.45,
-		health           = 40,
+		health = 40,
+		splash_mod = 0.3,
 		resist = {
 			emp   = 50,
-			slash = 10,
-			impact = 25,
+			impact = 50,
 		},
 		damage_mod = {
 			emp = 1.0,

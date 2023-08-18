@@ -115,12 +115,17 @@ register_gfx_blueprint "medusaling"
 	blueprint = "medusaling_base_flesh",
 	style = {
 		materials = {
-			medusa_body         = "data/texture/medusa_01/A/medusa_body_01",
-			medusa_addon        = "data/texture/medusa_01/A/medusa_addon_01",
-			medusa_tentacles_01 = "data/texture/medusa_01/A/medusa_tentacles_01",
-			medusa_tentacles_02 = "data/texture/medusa_01/A/medusa_tentacles_02",
-			medusa_weapon       = "data/texture/medusa_01/A/medusa_weapon_01",
+			medusa_body         = "enemy_gfx/textures/medusaling/medusa_body_01",
+			medusa_addon        = "enemy_gfx/textures/medusaling/medusa_addon_01",
+			medusa_tentacles_01 = "enemy_gfx/textures/medusaling/medusa_tentacles_01",
+			medusa_tentacles_02 = "enemy_gfx/textures/medusaling/medusa_tentacles_02",
+			medusa_weapon       = "enemy_gfx/textures/medusaling/medusa_weapon_01",
 		},
+	},
+	light = {
+		position    = vec3(0,0.1,0),
+		color       = vec4(0.75,0.35,0.5,1.0),
+		range       = 0.2,
 	},
 }
 
@@ -129,12 +134,17 @@ register_gfx_blueprint "archmedusaling"
 	blueprint = "medusaling_base_metal",
 	style = {
 		materials = {
-			medusa_body         = "data/texture/medusa_01/B/medusa_body_01",
-			medusa_addon        = "data/texture/medusa_01/B/medusa_addon_01",
-			medusa_tentacles_01 = "data/texture/medusa_01/B/medusa_tentacles_01",
-			medusa_tentacles_02 = "data/texture/medusa_01/B/medusa_tentacles_02",
-			medusa_weapon       = "data/texture/medusa_01/B/medusa_weapon_01",
+			medusa_body         = "enemy_gfx/textures/archmedusaling/medusa_body_01",
+			medusa_addon        = "enemy_gfx/textures/archmedusaling/medusa_addon_01",
+			medusa_tentacles_01 = "enemy_gfx/textures/archmedusaling/medusa_tentacles_01",
+			medusa_tentacles_02 = "enemy_gfx/textures/archmedusaling/medusa_tentacles_02",
+			medusa_weapon       = "enemy_gfx/textures/archmedusaling/medusa_weapon_01",
 		},
+	},
+	light = {
+		position    = vec3(0,0.1,0),
+		color       = vec4(0.75,0.35,0.5,1.0),
+		range       = 0.2,
 	},
 }
 
