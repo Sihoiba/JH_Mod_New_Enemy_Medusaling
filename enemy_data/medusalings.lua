@@ -59,23 +59,13 @@ register_blueprint "buff_blinded"
 		desc    = "Reduces vision range",				
 	},
 	callbacks = {
-		on_post_command = [[
-			function ( self, actor, cmt, tgt, time )
-				world:callback( self )
-			end
-		]],
-		on_callback = [[
-			function ( self )
-				local target = ecs:parent( self )
+		on_attach = [[
+			function ( self, target )
 				local level = world:get_level()
-				if self.lifetime.time_left > 100 then				
-					target.attributes.vision = level.level_info.light_range - 3
-				else
-					target.attributes.vision = level.level_info.light_range
-				end	
-				
+				self.attributes.vision = -( target:attribute( "vision" ) - ( level.level_info.light_range -3 ) ) 
+				self.attributes.min_vision = - ( target:attribute("vision" ) - 2 )
 			end
-		]],
+		]],	
 		on_die = [[
 			function ( self )	
 				world:mark_destroy( self )
@@ -231,7 +221,7 @@ register_blueprint "medusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
-		{ 3, keywords = { "test" }, weight = 150 },
+		-- { keywords = { "test" }, weight = 150 },
 		{ 3, keywords = { "callisto", "europa", "demon", "demon1" }, weight = 150, dmin = 6, dmax = 29, },
 		{ 7, keywords = { "europa", "io", "demon", "demon1" }, weight = 50, dmin = 9, dmax = 57, },
 		{ 10, keywords = { "io", "swarm", "demon", "demon1" }, weight = 50, dmin = 16, dmax = 57, },
@@ -255,7 +245,6 @@ register_blueprint "archmedusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
-		{ 2, keywords = { "test" }, weight = 150 },
 		{ 3,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard" }, weight = 100, dmin = 16, },	
 		{ 5,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard" }, weight = 200, dmin = 22, },
 		{ 7,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard", "swarm" }, weight = 200, dmin = 26, },	
@@ -298,8 +287,7 @@ register_blueprint "exalted_medusaling"
 {
 	blueprint = "medusaling_base",
 	lists = {
-		group = "being",	
-		{ keywords = { "test" }, weight = 150 },
+		group = "being",
 		{  6,  keywords = { "beyond", "dante", "general", "demon", "demon2", "vhard" }, weight = 200, dmin = 26, },	
 	},
 	text = {
