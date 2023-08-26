@@ -183,7 +183,7 @@ register_blueprint "medusaling_dodge"
 					if evasion > 0 then
 						if last >= COMMAND_MOVE and last <= COMMAND_MOVE_F then
 							self.attributes.evasion = math.floor( evasion / 2 )
-							self.attributes.splash_mod = 0.3
+							self.attributes.splash_mod = 0.1
 						else
 							self.attributes.evasion = 0
 							self.attributes.splash_mod = 1.0
@@ -195,7 +195,7 @@ register_blueprint "medusaling_dodge"
 		on_move = [[
 			function ( self, entity )
 				self.attributes.evasion = math.min( self.attributes.evasion + 40 + (DIFFICULTY * 10), 100 + (DIFFICULTY * 20) )
-				self.attributes.splash_mod = 0.3
+				self.attributes.splash_mod = 0.1
 			end
 		]],
 	},
@@ -221,7 +221,7 @@ register_blueprint "medusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
-		-- { keywords = { "test" }, weight = 150 },
+		-- { 3, keywords = { "test" }, weight = 150 },
 		{ 3, keywords = { "callisto", "europa", "demon", "demon1" }, weight = 150, dmin = 6, dmax = 29, },
 		{ 7, keywords = { "europa", "io", "demon", "demon1" }, weight = 50, dmin = 9, dmax = 57, },
 		{ 10, keywords = { "io", "swarm", "demon", "demon1" }, weight = 50, dmin = 16, dmax = 57, },
@@ -245,6 +245,7 @@ register_blueprint "archmedusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
+		-- { keywords = { "test" }, weight = 150 },
 		{ 3,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard" }, weight = 100, dmin = 16, },	
 		{ 5,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard" }, weight = 200, dmin = 22, },
 		{ 7,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard", "swarm" }, weight = 200, dmin = 26, },	
@@ -288,6 +289,7 @@ register_blueprint "exalted_medusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
+		{ keywords = { "test" }, weight = 150 },
 		{  6,  keywords = { "beyond", "dante", "general", "demon", "demon2", "vhard" }, weight = 200, dmin = 26, },	
 	},
 	text = {
@@ -332,7 +334,7 @@ register_blueprint "exalted_medusaling"
 		function( self,_,tier )
 			self:attach( "medusaling_armor" )
 			self:attach( "archmedusaling_jaws" )
-			self:attach( "medusa_dodge" )
+			self:attach( "medusaling_dodge" )
 			if tier > 1 then
 				make_exalted( self, tier, self.data.exalted_traits )
 			end
