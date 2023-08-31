@@ -35,20 +35,6 @@ register_blueprint "medusaling_base"
 		active   = true,
 		strength = 0,
 	},
-	data = {
-		nightmare = {
-			id   = "exalted_medusaling",
-		},
-		ai = {
-			aware  = false,
-			alert  = 1,
-			group  = "demon",
-			state  = "idle",
-			melee  = 2,
-			charge = true,
-			smell  = 2000,
-		},
-	},
 }
 
 register_blueprint "buff_blinded"
@@ -221,7 +207,7 @@ register_blueprint "medusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
-		-- { 3, keywords = { "test" }, weight = 150 },
+		{ 3, keywords = { "test" }, weight = 150 },
 		{ 3, keywords = { "callisto", "europa", "demon", "demon1" }, weight = 150, dmin = 6, dmax = 29, },
 		{ 7, keywords = { "europa", "io", "demon", "demon1" }, weight = 50, dmin = 9, dmax = 57, },
 		{ 10, keywords = { "io", "swarm", "demon", "demon1" }, weight = 50, dmin = 16, dmax = 57, },
@@ -229,6 +215,20 @@ register_blueprint "medusaling"
 	text = {
 		name      = "medusaling",
 		namep     = "medusalings",
+	},
+	data = {
+		nightmare = {
+			id   = "exalted_medusaling",
+		},
+		ai = {
+			aware  = false,
+			alert  = 1,
+			group  = "demon",
+			state  = "idle",
+			melee  = 2,
+			charge = true,
+			smell  = 2000,
+		},
 	},
 	callbacks = {
 		on_create = [=[
@@ -245,7 +245,7 @@ register_blueprint "archmedusaling"
 	blueprint = "medusaling_base",
 	lists = {
 		group = "being",
-		-- { keywords = { "test" }, weight = 150 },
+		{ keywords = { "test" }, weight = 150 },
 		{ 3,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard" }, weight = 100, dmin = 16, },	
 		{ 5,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard" }, weight = 200, dmin = 22, },
 		{ 7,  keywords = { "io", "beyond", "dante", "general", "demon", "demon2", "hard", "swarm" }, weight = 200, dmin = 26, },	
@@ -273,6 +273,20 @@ register_blueprint "archmedusaling"
 			emp = 1.0,
 		},
 	},
+	data = {
+		nightmare = {
+			id   = "exalted_archmedusaling",
+		},
+		ai = {
+			aware  = false,
+			alert  = 1,
+			group  = "demon",
+			state  = "idle",
+			melee  = 2,
+			charge = true,
+			smell  = 2000,
+		},
+	},
 	callbacks = {
 		on_create = [=[
 		function( self )
@@ -288,9 +302,7 @@ register_blueprint "exalted_medusaling"
 {
 	blueprint = "medusaling_base",
 	lists = {
-		group = "being",
-		{ keywords = { "test" }, weight = 150 },
-		{  6,  keywords = { "beyond", "dante", "general", "demon", "demon2", "vhard" }, weight = 200, dmin = 26, },	
+		group = "exalted",
 	},
 	text = {
 		name      = "exalted medusaling",
@@ -301,6 +313,72 @@ register_blueprint "exalted_medusaling"
 		color     = LIGHTMAGENTA,
 	},
 	data = {
+		ai = {
+			aware  = false,
+			alert  = 1,
+			group  = "demon",
+			state  = "idle",
+			melee  = 2,
+			charge = true,
+			smell  = 2000,
+		},
+		is_semimechanical = false,		
+		nightmare = false,
+		exalted_traits = {
+			danger = 25,
+			{ "exalted_kw_unstable", },
+			{ "exalted_kw_hunter", tag = "speed", },
+			{ "exalted_kw_tough",     tag = "health", min = 10, },
+			{ "exalted_kw_resilient", tag = "health", min = 20, },
+			{ "exalted_kw_accurate", },
+			{ "exalted_kw_fast", min = 15, tag = "speed", },
+			{ "exalted_kw_regenerate", tag = "health", min = 25, },
+			{ "exalted_kw_lethal", min = 15, }, 
+			{ "exalted_kw_deadly", min = 25, }, 
+			{ "exalted_kw_resist", min = 15, },
+		},
+	},
+	attributes = {
+		experience_value = 15,
+		speed = 1.35,
+		health = 12,		
+	},
+	callbacks = {
+		on_create = [=[
+		function( self )
+			self:attach( "medusaling_jaws" )
+			self:attach( "medusaling_dodge" )
+		end
+		]=],
+	},
+}
+
+register_blueprint "exalted_archmedusaling"
+{
+	blueprint = "medusaling_base",
+	lists = {
+		group = "exalted",
+		-- { keywords = { "test" }, weight = 150 },
+		{  6,  keywords = { "beyond", "dante", "general", "demon", "demon2", "vhard" }, weight = 200, dmin = 26, },	
+	},
+	text = {
+		name      = "exalted archmedusaling",
+		namep     = "exalted archmedusalings",
+	},
+	ascii     = {
+		glyph     = "o",
+		color     = MAGENTA,
+	},
+	data = {
+		ai = {
+			aware  = false,
+			alert  = 1,
+			group  = "demon",
+			state  = "idle",
+			melee  = 2,
+			charge = true,
+			smell  = 2000,
+		},
 		is_semimechanical = true,		
 		nightmare = false,
 		exalted_traits = {

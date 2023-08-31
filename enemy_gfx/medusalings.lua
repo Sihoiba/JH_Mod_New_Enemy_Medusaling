@@ -150,6 +150,25 @@ register_gfx_blueprint "archmedusaling"
 
 register_gfx_blueprint "exalted_medusaling"
 {
+	blueprint = "medusaling_base_flesh",
+	style = {
+		materials = {
+			medusa_body         = "data/texture/medusa_01/C/medusa_body_01",
+			medusa_addon        = "data/texture/medusa_01/C/medusa_addon_01",
+			medusa_tentacles_01 = "data/texture/medusa_01/C/medusa_tentacles_01",
+			medusa_tentacles_02 = "data/texture/medusa_01/C/medusa_tentacles_02",
+			medusa_weapon       = "data/texture/medusa_01/C/medusa_weapon_01",
+		},
+	},
+	light = {
+		position    = vec3(0,0.1,0),
+		color       = vec4(0.75,0.35,2.0,1.0),
+		range       = 2.5,
+	},
+}
+
+register_gfx_blueprint "exalted_archmedusaling"
+{
 	blueprint = "medusaling_base_metal",
 	style = {
 		materials = {
