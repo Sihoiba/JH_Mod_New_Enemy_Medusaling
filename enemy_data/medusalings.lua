@@ -357,9 +357,10 @@ register_blueprint "exalted_archmedusaling"
 {
 	blueprint = "medusaling_base",
 	lists = {
-		group = "exalted",
-		-- { keywords = { "test" }, weight = 150 },
-		{  6,  keywords = { "beyond", "dante", "general", "demon", "demon2", "vhard" }, weight = 200, dmin = 26, },	
+		group = "exalted",		
+		keywords = { "beyond", "dante", "general", "demon", "demon2", "vhard" }, 
+		weight = 200, 
+		dmin = 26,
 	},
 	text = {
 		name      = "exalted archmedusaling",
