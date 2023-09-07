@@ -169,7 +169,7 @@ register_blueprint "medusaling_dodge"
 					if evasion > 0 then
 						if last >= COMMAND_MOVE and last <= COMMAND_MOVE_F then
 							self.attributes.evasion = math.floor( evasion / 2 )
-							self.attributes.splash_mod = 0.1
+							self.attributes.splash_mod = 0.2
 						else
 							self.attributes.evasion = 0
 							self.attributes.splash_mod = 1.0
@@ -180,8 +180,8 @@ register_blueprint "medusaling_dodge"
 		]],
 		on_move = [[
 			function ( self, entity )
-				self.attributes.evasion = math.min( self.attributes.evasion + 40 + (DIFFICULTY * 10), 100 + (DIFFICULTY * 20) )
-				self.attributes.splash_mod = 0.1
+				self.attributes.evasion = math.min( self.attributes.evasion + 40 + (DIFFICULTY * 10), 100 + (DIFFICULTY * 10) )
+				self.attributes.splash_mod = 0.2
 			end
 		]],
 	},
