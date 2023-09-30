@@ -49,7 +49,7 @@ register_blueprint "buff_blinded"
 			function ( self, target )
 				local level = world:get_level()
 				self.attributes.vision = -( target:attribute( "vision" ) - ( level.level_info.light_range -3 ) ) 
-				self.attributes.min_vision = - ( target:attribute("vision" ) - 2 )
+				self.attributes.min_vision = - ( target:attribute("min_vision" ) - 2 )
 			end
 		]],	
 		on_die = [[
