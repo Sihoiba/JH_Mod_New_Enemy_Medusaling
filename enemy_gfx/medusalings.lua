@@ -75,7 +75,7 @@ register_gfx_blueprint "medusaling_base_metal"
 		floating = 0.6,
 	},	
 	scale = {
-		scale = 0.4,
+		scale = 0.3,
 	},
 	render = {
 		mesh        = "data/model/medusa_01.nmd:medusa_body_01",
@@ -83,7 +83,7 @@ register_gfx_blueprint "medusaling_base_metal"
 	},
 	{	
 		scale = {
-			scale = 0.4,
+			scale = 0.3,
 		},
 		render = {
 			mesh        = "data/model/medusa_01.nmd:medusa_tentacles_02",
@@ -92,7 +92,7 @@ register_gfx_blueprint "medusaling_base_metal"
 	},
 	{		
 		scale = {
-			scale = 0.4,
+			scale = 0.3,
 		},
 		render = {
 			mesh        = "data/model/medusa_01.nmd:medusa_addon_01",
@@ -101,7 +101,7 @@ register_gfx_blueprint "medusaling_base_metal"
 	},
 	{	
 		scale = {
-			scale = 0.4,
+			scale = 0.3,
 		},
 		render = {
 			mesh        = "data/model/medusa_01.nmd:medusa_weapon_01",
