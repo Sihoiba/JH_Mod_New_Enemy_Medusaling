@@ -25,7 +25,7 @@ register_sound "medusaling_pain"
 register_sound "medusaling_idle"
 {
     group = "fx",
-	volume = 0.8,
+	volume = 0.6,
     "enemy_sound/sounds/medusaling_idle_01.wav",
     "enemy_sound/sounds/medusaling_idle_02.wav",
 }
