@@ -103,7 +103,7 @@ register_blueprint "medusaling_jaws"
         on_damage = [[
             function ( weapon, who, amount, source )
                 if who and who.data and who.data.is_player then
-                    world:add_buff( who, "buff_blinded", 500 )
+                    world:add_buff( who, "buff_blinded", 500, true )
                 end
             end
         ]],
