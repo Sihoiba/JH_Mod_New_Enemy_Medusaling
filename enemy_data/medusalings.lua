@@ -209,8 +209,7 @@ register_blueprint "medusaling"
         group = "being",
         { 3, keywords = { "test" }, weight = 150 },
         { 3, keywords = { "callisto", "europa", "demon", "demon1" }, weight = 150, dmin = 6, dmax = 29, },
-        { 7, keywords = { "europa", "io", "demon", "demon1" }, weight = 50, dmin = 9, dmax = 57, },
-        { 10, keywords = { "io", "swarm", "demon", "demon1" }, weight = 50, dmin = 16, dmax = 57, },
+        { 7, keywords = { "europa", "demon", "demon1" }, weight = 50, dmin = 9, dmax = 57, },
     },
     text = {
         name      = "medusaling",
