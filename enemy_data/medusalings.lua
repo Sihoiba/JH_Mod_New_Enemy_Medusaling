@@ -236,6 +236,19 @@ register_blueprint "medusaling"
             self:attach( "medusaling_dodge" )
         end
         ]=],
+        on_timer = [=[
+            function ( self, first )
+                if first then return 50 end
+                local level = world:get_level()
+                local player = world:get_player()
+                local selfPos = world:get_position( self )
+                if level:get_cell_flags( selfPos )[ EF_NOMOVE ] then
+                    nova.log("medusaling on void moving towards player")
+                    world:command_coord( COMMAND_MOVE, self, world:get_position( player ) )
+                end
+                return 2000
+            end
+        ]=],
     },
 }
 
@@ -293,6 +306,19 @@ register_blueprint "archmedusaling"
             self:attach( "archmedusaling_jaws" )
             self:attach( "medusaling_dodge" )
         end
+        ]=],
+        on_timer = [=[
+            function ( self, first )
+                if first then return 50 end
+                local level = world:get_level()
+                local player = world:get_player()
+                local selfPos = world:get_position( self )
+                if level:get_cell_flags( selfPos )[ EF_NOMOVE ] then
+                    nova.log("medusaling on void moving towards player")
+                    world:command_coord( COMMAND_MOVE, self, world:get_position( player ) )
+                end
+                return 2000
+            end
         ]=],
     },
 }
@@ -356,6 +382,19 @@ register_blueprint "exalted_medusaling"
             self:attach( "medusaling_jaws" )
             self:attach( "medusaling_dodge" )
         end
+        ]=],
+        on_timer = [=[
+            function ( self, first )
+                if first then return 50 end
+                local level = world:get_level()
+                local player = world:get_player()
+                local selfPos = world:get_position( self )
+                if level:get_cell_flags( selfPos )[ EF_NOMOVE ] then
+                    nova.log("medusaling on void moving towards player")
+                    world:command_coord( COMMAND_MOVE, self, world:get_position( player ) )
+                end
+                return 2000
+            end
         ]=],
     },
 }
@@ -433,6 +472,19 @@ register_blueprint "exalted_archmedusaling"
                 make_exalted( self, tier, self.data.exalted_traits )
             end
         end
+        ]=],
+        on_timer = [=[
+            function ( self, first )
+                if first then return 50 end
+                local level = world:get_level()
+                local player = world:get_player()
+                local selfPos = world:get_position( self )
+                if level:get_cell_flags( selfPos )[ EF_NOMOVE ] then
+                    nova.log("medusaling on void moving towards player")
+                    world:command_coord( COMMAND_MOVE, self, world:get_position( player ) )
+                end
+                return 2000
+            end
         ]=],
     },
 }
