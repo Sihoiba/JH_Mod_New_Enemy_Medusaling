@@ -244,9 +244,10 @@ register_blueprint "medusaling"
                 local selfPos = world:get_position( self )
                 if level:get_cell_flags( selfPos )[ EF_NOMOVE ] then
                     nova.log("medusaling on void moving towards player")
-                    world:command_coord( COMMAND_MOVE, self, world:get_position( player ) )
+                    self.target.entity = world:get_player()
+                    self.data.ai.state = "hunt"
                 end
-                return 2000
+                return 5000
             end
         ]=],
     },
@@ -315,9 +316,10 @@ register_blueprint "archmedusaling"
                 local selfPos = world:get_position( self )
                 if level:get_cell_flags( selfPos )[ EF_NOMOVE ] then
                     nova.log("medusaling on void moving towards player")
-                    world:command_coord( COMMAND_MOVE, self, world:get_position( player ) )
+                    self.target.entity = world:get_player()
+                    self.data.ai.state = "hunt"
                 end
-                return 2000
+                return 5000
             end
         ]=],
     },
@@ -387,9 +389,10 @@ register_blueprint "exalted_medusaling"
                 local selfPos = world:get_position( self )
                 if level:get_cell_flags( selfPos )[ EF_NOMOVE ] then
                     nova.log("medusaling on void moving towards player")
-                    world:command_coord( COMMAND_MOVE, self, world:get_position( player ) )
+                    self.target.entity = world:get_player()
+                    self.data.ai.state = "hunt"
                 end
-                return 2000
+                return 5000
             end
         ]=],
     },
@@ -473,9 +476,10 @@ register_blueprint "exalted_archmedusaling"
                 local selfPos = world:get_position( self )
                 if level:get_cell_flags( selfPos )[ EF_NOMOVE ] then
                     nova.log("medusaling on void moving towards player")
-                    world:command_coord( COMMAND_MOVE, self, world:get_position( player ) )
+                    self.target.entity = world:get_player()
+                    self.data.ai.state = "hunt"
                 end
-                return 2000
+                return 5000
             end
         ]=],
     },
